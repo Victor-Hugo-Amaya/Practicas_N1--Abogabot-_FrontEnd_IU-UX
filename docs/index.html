@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abogabot · Caso UX/UI</title>
+<meta name="description" content="Caso de portafolio de Víctor Hugo Amaya: levantamiento de requerimientos, público objetivo, wireframes y prototipo móvil en Figma para Abogabot, plataforma de autoservicio legal.">
+<meta property="og:title" content="Abogabot · Caso UX/UI">
+<meta property="og:description" content="De requerimientos a prototipo móvil en Figma: flujo de alta, consulta, pago y seguimiento de una demanda.">
+<meta property="og:image" content="assets/ui-00.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b4780'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='700' font-size='26' text-anchor='middle' fill='%23d6b268'%3EAB%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --navy:#0b4780; --navy-ink:#0a2a4a; --gold:#c9a24f; --gold-soft:#f4ead3;
+    --bg:#f7f8fa; --surface:#ffffff; --text:#1d2433; --muted:#5b6474; --line:#e3e7ee;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0e1420; --surface:#151d2c; --text:#e8ecf3; --muted:#a3adbf; --line:#263247; --gold-soft:#2a2516; --navy-ink:#d6e2f2; }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+  a{color:var(--navy)}
+  @media (prefers-color-scheme: dark){ a{color:#8fb8e8} }
+  .wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+  header.hero{background:var(--navy);color:#fff;padding:56px 0 48px}
+  .brand{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+  .brand svg{flex:none}
+  .brand small{display:block;color:var(--gold);letter-spacing:.12em;font-size:11px;font-weight:600}
+  .brand b{color:var(--gold);font-size:26px;line-height:1}
+  h1{font-size:clamp(28px,5vw,44px);line-height:1.15;margin:0 0 14px;max-width:20ch}
+  .lead{font-size:18px;max-width:60ch;color:#dbe6f3;margin:0 0 24px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:0;list-style:none}
+  .meta li{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);padding:4px 12px;border-radius:999px;font-size:14px}
+  nav.toc{position:sticky;top:0;z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+  nav.toc .wrap{display:flex;gap:18px;overflow-x:auto;padding-top:12px;padding-bottom:12px;white-space:nowrap}
+  nav.toc a{text-decoration:none;color:var(--muted);font-size:14px;font-weight:500}
+  nav.toc a:hover{color:var(--text)}
+  section{padding:48px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:26px;margin:0 0 6px}
+  .kicker{color:var(--gold);font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 6px}
+  p.intro{color:var(--muted);max-width:68ch;margin:0 0 24px}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px}
+  .card h3{margin:0 0 6px;font-size:17px}
+  .card p,.card ul{margin:0;color:var(--muted)}
+  .card ul{padding-left:18px}
+  figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  figure a{display:block}
+  figure img{display:block;width:100%;height:auto}
+  figcaption{padding:12px 16px;font-size:14px;color:var(--muted);border-top:1px solid var(--line)}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 24px;padding:0;list-style:none}
+  .flow li{background:var(--gold-soft);border:1px solid var(--gold);color:var(--text);padding:6px 12px;border-radius:8px;font-size:14px;font-weight:500}
+  .flow li.arrow{background:none;border:none;color:var(--muted);padding:0}
+  .note{background:var(--gold-soft);border-left:4px solid var(--gold);padding:14px 16px;border-radius:8px;color:var(--text);margin-top:20px}
+  .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+  .btn{display:inline-block;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:15px;border:1px solid var(--line);background:var(--surface);color:var(--text)}
+  .btn.primary{background:var(--gold);border-color:var(--gold);color:#1d1a10}
+  footer{padding:32px 0 48px;color:var(--muted);font-size:14px}
+  @media (max-width:560px){ header.hero{padding:40px 0 36px} section{padding:36px 0} }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brand" aria-label="Abogabot">
+      <svg width="52" height="52" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="23" fill="none" stroke="#d6b268" stroke-width="3"/><text x="26" y="34" text-anchor="middle" font-family="system-ui,Arial" font-weight="700" font-size="21" fill="#d6b268">AB</text></svg>
+      <div><small>DESPACHO LEGAL DIGITAL</small><b>Abogabot</b></div>
+    </div>
+    <p class="kicker" style="color:#d6b268">Caso de portafolio · UX/UI</p>
+    <h1>Autoservicio legal: de requerimientos a prototipo móvil</h1>
+    <p class="lead">Diseño del flujo con el que un cliente abre una consulta legal, paga y da seguimiento a su caso desde el celular, sin llamar ni acudir al despacho.</p>
+    <ul class="meta">
+      <li>Rol: análisis de requerimientos y diseño UX/UI</li>
+      <li>Herramienta: Figma (Android 360×800)</li>
+      <li>Duración: 3 días · feb 2022</li>
+      <li>Tipo: práctica académica, cliente ficticio</li>
+    </ul>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Secciones">
+  <div class="wrap">
+    <a href="#reto">Reto</a>
+    <a href="#requerimientos">Requerimientos</a>
+    <a href="#usuario">Usuario</a>
+    <a href="#wireframes">Wireframes</a>
+    <a href="#ui">Diseño UI</a>
+    <a href="#aprendizajes">Aprendizajes</a>
+  </div>
+</nav>
+
+<main>
+  <section id="reto">
+    <div class="wrap">
+      <p class="kicker">01 · Reto</p>
+      <h2>Un despacho que atiende todo por teléfono y en persona</h2>
+      <p class="intro">El despacho quería que sus clientes iniciaran una demanda llenando un formulario web, pagaran en línea y consultaran el avance sin depender de llamadas. Del lado interno, el administrador necesitaba recibir la solicitud, generar el documento legal en Word con los datos capturados y ver los ingresos en un tablero.</p>
+      <div class="grid g3">
+        <div class="card"><h3>Cliente</h3><p>Crea su cuenta, describe su caso, adjunta documentos, paga y recibe avisos por correo en cada etapa.</p></div>
+        <div class="card"><h3>Administrador</h3><p>Recibe la notificación, genera el documento automáticamente, actualiza el estado y deja comentarios por etapa.</p></div>
+        <div class="card"><h3>Restricciones</h3><p>Sitio responsive con prioridad móvil. Paleta solicitada: azul marino y blanco, abierta a propuestas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="requerimientos">
+    <div class="wrap">
+      <p class="kicker">02 · Requerimientos</p>
+      <h2>Especificación antes de dibujar pantallas</h2>
+      <p class="intro">Documenté la solicitud con un formato de especificación de requerimientos de software: descripción, alcance, interesados, requisitos técnicos y un plan de tres fases (boceto UI/UX, desarrollo y pruebas de calidad).</p>
+      <div class="grid g2">
+        <div class="card">
+          <h3>Requisitos funcionales clave</h3>
+          <ul>
+            <li>Registro e inicio de sesión (correo, Google o Facebook).</li>
+            <li>Formulario de consulta con materia legal, tipo de demanda y adjuntos.</li>
+            <li>Pago en línea antes de iniciar el proceso.</li>
+            <li>Seguimiento por estados: entregada, revisada, terminada.</li>
+            <li>Notificaciones por correo y tablero de ingresos para el administrador.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Requisitos técnicos marcados</h3>
+          <ul>
+            <li>Tipo de desarrollo: web responsive.</li>
+            <li>Base de datos: SQL Server.</li>
+            <li>Lenguaje: JavaScript.</li>
+            <li>Componente conversacional propuesto con Dialogflow para atender solicitudes de servicio.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="btns"><a class="btn" href="assets/requerimientos-abogabot.pdf" target="_blank" rel="noopener">Ver documento de requerimientos (PDF)</a></div>
+    </div>
+  </section>
+
+  <section id="usuario">
+    <div class="wrap">
+      <p class="kicker">03 · Usuario</p>
+      <h2>Público objetivo</h2>
+      <p class="intro">Residentes de la alcaldía Cuauhtémoc (CDMX), de 25 a 50 años, con ritmo de vida ocupado, trámites legales pendientes y hábito de usar la tecnología para resolver tareas. Buscan rapidez por encima de todo.</p>
+      <div class="grid g2">
+        <figure>
+          <a href="assets/publico-objetivo.jpeg" target="_blank" rel="noopener"><img src="assets/publico-objetivo.jpeg" alt="Segmentación del público objetivo por geografía, demografía, psicografía e identificadores" loading="lazy" width="1100" height="271"></a>
+          <figcaption>Segmentación: geografía, demografía, psicografía e identificadores.</figcaption>
+        </figure>
+        <figure>
+          <a href="assets/buyer-persona.pdf" target="_blank" rel="noopener"><img src="assets/buyer-persona-1.png" alt="Ficha de buyer persona" loading="lazy" width="1287" height="909"></a>
+          <figcaption>Buyer persona (ejercicio de práctica). Ver la nota en Aprendizajes.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="wireframes">
+    <div class="wrap">
+      <p class="kicker">04 · Wireframes</p>
+      <h2>Arquitectura del flujo en baja fidelidad</h2>
+      <p class="intro">Seis pantallas conectadas como prototipo interactivo en Figma. El objetivo fue validar el recorrido completo antes de invertir tiempo en lo visual.</p>
+      <ol class="flow" aria-label="Flujo principal">
+        <li>Inicio de sesión</li><li class="arrow" aria-hidden="true">→</li>
+        <li>Registro</li><li class="arrow" aria-hidden="true">→</li>
+        <li>Menú de acciones</li><li class="arrow" aria-hidden="true">→</li>
+        <li>Crear consulta</li><li class="arrow" aria-hidden="true">→</li>
+        <li>Pagar</li><li class="arrow" aria-hidden="true">→</li>
+        <li>Estado de consulta</li>
+      </ol>
+      <div class="grid">
+        <figure>
+          <a href="assets/ux-00.png" target="_blank" rel="noopener"><img src="assets/ux-00.png" alt="Wireframes de inicio de sesión, registro y menú con conexiones de prototipo en Figma" loading="lazy" width="1366" height="768"></a>
+          <figcaption>Pantallas 1 a 3: acceso, alta de cuenta y menú con conexiones del prototipo.</figcaption>
+        </figure>
+        <figure>
+          <a href="assets/ux-01.png" target="_blank" rel="noopener"><img src="assets/ux-01.png" alt="Wireframes de crear consulta, pago y estado de consulta" loading="lazy" width="1366" height="768"></a>
+          <figcaption>Pantallas 4 a 6: formulario de consulta, pago y seguimiento por estados.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="ui">
+    <div class="wrap">
+      <p class="kicker">05 · Diseño UI</p>
+      <h2>Alta fidelidad para Android</h2>
+      <p class="intro">Respeté la preferencia del cliente (azul marino) y añadí dorado como color de acción para dar contraste y transmitir formalidad. Los botones principales concentran las tres tareas que el usuario viene a resolver: nueva consulta, pagar y revisar estado.</p>
+      <div class="grid">
+        <figure>
+          <a href="assets/ui-00.png" target="_blank" rel="noopener"><img src="assets/ui-00.png" alt="Pantallas UI de inicio de sesión, registro y menú de acciones en azul marino y dorado" loading="lazy" width="1026" height="768"></a>
+          <figcaption>Inicio de sesión, registro con acceso social y menú de acciones.</figcaption>
+        </figure>
+        <figure>
+          <a href="assets/ui-01.png" target="_blank" rel="noopener"><img src="assets/ui-01.png" alt="Pantallas UI de crear consulta, pagar consulta y estado de consulta" loading="lazy" width="1366" height="768"></a>
+          <figcaption>Crear consulta, pago y estado. Pago y estado conservan componentes base de la librería, pendientes de afinar.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="aprendizajes">
+    <div class="wrap">
+      <p class="kicker">06 · Aprendizajes</p>
+      <h2>Qué haría distinto hoy</h2>
+      <div class="grid g2">
+        <div class="card"><h3>Persona alineada al segmento</h3><p>El buyer persona de la práctica (vendedora del sector farmacéutico) no refleja al cliente del despacho. Hoy construiría la persona a partir del segmento definido: profesionista de la Cuauhtémoc con un trámite legal urgente y poco tiempo.</p></div>
+        <div class="card"><h3>Completar pago y estado</h3><p>Las pantallas 5 y 6 aún muestran textos de relleno. El siguiente paso es definir el resumen de cobro, los métodos de pago y una línea de tiempo con fecha y comentario por etapa.</p></div>
+        <div class="card"><h3>Diseñar el lado del administrador</h3><p>El requerimiento incluye tablero de ingresos y actualización de estados, que no llegaron a prototipo. Es donde está el mayor ahorro operativo para el despacho.</p></div>
+        <div class="card"><h3>Medir con usuarios reales</h3><p>Probar el flujo con 5 personas del segmento y medir tiempo para crear una consulta y tasa de abandono en el pago, antes de pasar a desarrollo.</p></div>
+      </div>
+      <p class="note">Relación con mi trabajo actual: el mismo principio de este caso, reducir llamadas dando al usuario visibilidad del estado de su solicitud, es el que aplico en soporte técnico N1 y en la digitalización de pequeños negocios.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Víctor Hugo Amaya</strong> · Soporte técnico N1 y transformación digital de PyMEs</p>
+    <div class="btns">
+      <a class="btn primary" href="https://www.linkedin.com/in/victor-hugo-amaya" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/Victor-Hugo-Amaya/Practicas_N1--Abogabot-_FrontEnd_IU-UX" target="_blank" rel="noopener">Repositorio</a>
+    </div>
+    <p style="margin-top:20px">Abogabot es un cliente ficticio creado para una práctica académica. Nombre, logotipo y datos son ilustrativos.</p>
+  </div>
+</footer>
+</body>
+</html>
